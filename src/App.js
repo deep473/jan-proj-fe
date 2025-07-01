@@ -4,6 +4,8 @@ import Signup from './pages/Signup'
 import Signin from './pages/Signin' 
 import Admin from './pages/Admin';
 import Customer from './pages/Customer';
+import Addproduct from './pages/Addproduct';
+import Updateproduct from './pages/Updateproduct';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
             <Route path='/sign_in_page' element = {<Signin />} />
             <Route path='/admin_page' element = {<Admin />} />
             <Route path='/customer_page' element = {<Customer />} />
+            <Route path='/add_prod_page' element = {<Addproduct />} />
+            <Route path='/update_prod_page' element = {<Updateproduct />} />
         </Routes>
     </BrowserRouter>
   );

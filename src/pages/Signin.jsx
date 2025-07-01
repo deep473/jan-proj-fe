@@ -1,32 +1,32 @@
-// src/pages/Signup.jsx
+// src/pages/Signin.jsx
 
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
-export default function Signup() {
-  // 1. State for each field
+export default function Signin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
   const navigate = useNavigate();
 
-  // 2. Submit handler
   const handleSubmit = (e) => {
-    e.preventDefault();   // prevent page reload
+    e.preventDefault();
 
     const data = { username, password };
-
     axios
       .post('http://localhost:8080/signIn', data)
       .then(res => {
         console.log('Sign in OK:', res.data);
-        const role = res.data
+        // **STORE** the username for later
+        localStorage.setItem('username', username);
+
+        const role = res.data;
         if (role === 'admin') {
-          navigate('/admin_page')
-        }
-        if (role === 'customer') {
-          navigate('/customer_page')
+          navigate('/admin_page');
+        } else if (role === 'customer') {
+          navigate('/customer_page');
+        } else {
+          alert('Unknown role: ' + role);
         }
       })
       .catch(err => {
@@ -37,7 +37,7 @@ export default function Signup() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Sign up below:</h2>
+      <h2>Sign In</h2>
 
       <label>Username:</label>
       <input
@@ -46,8 +46,7 @@ export default function Signup() {
         onChange={e => setUsername(e.target.value)}
         required
       />
-      <br></br><br></br>
-      
+
       <label>Password:</label>
       <input
         type="password"
@@ -55,9 +54,8 @@ export default function Signup() {
         onChange={e => setPassword(e.target.value)}
         required
       />
-      <br></br><br></br>
-      
-      <button type="submit">Sign IN</button>
+
+      <button type="submit">Sign In</button>
     </form>
   );
 }
