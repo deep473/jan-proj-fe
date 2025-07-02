@@ -23,6 +23,14 @@ export default function Customer() {
       .catch(err => console.error('Failed to fetch products:', err));
   };
 
+  const handleCart = (prod) => {
+    const payload = {username, prod}
+    axios
+      .post('http://localhost:8080/addToCart', payload )
+      .then(() => fetchProducts())
+      .catch(err => console.error('Add to cart failed!:', err));
+  }; 
+
   return (
     <div>
       <h2>Welcome {username}</h2>
@@ -47,7 +55,9 @@ export default function Customer() {
               <td>{p.description}</td>
               <td>{p.price}</td>
               <td>
-                <button>Add to Cart</button>
+                <button
+                  onClick={() => handleCart(p)}
+                >Add to Cart</button>
               </td>
             </tr>
           ))}
