@@ -7,6 +7,7 @@ import Customer from './pages/Customer';
 import Addproduct from './pages/Addproduct';
 import Updateproduct from './pages/Updateproduct';
 import ViewCart from './pages/ViewCart';
+import './styles.css';
 
 function App() {
   return (

@@ -1,4 +1,3 @@
-// src/pages/ViewCart.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -7,29 +6,25 @@ export default function ViewCart() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetchCart();
-  }, []);
-
-  const fetchCart = () => {
-    axios
-      .get('http://localhost:8080/viewCart', { params: { username } })
+    axios.get('http://localhost:8080/viewCart', { params: { username } })
       .then(res => setItems(res.data))
-      .catch(err => console.error('Fetch cart failed:', err));
-  };
+      .catch(console.error);
+  }, [username]);
 
   const updateQuantity = (item, newQty) => {
     if (newQty < 1) return;
-    const payload = { username, prod: { id: item.productId }, quantity: newQty };
-    axios
-      .post('http://localhost:8080/updateCartItem', payload)
-      .then(() => fetchCart())
-      .catch(err => console.error('Update cart failed:', err));
+    axios.post('http://localhost:8080/updateCartItem', {
+        username, prod: { id: item.productId }, quantity: newQty
+      })
+      .then(() => axios.get('http://localhost:8080/viewCart', { params: { username } })
+                      .then(res => setItems(res.data)))
+      .catch(console.error);
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>{username}'s Cart</h2>
-      <table border="1" cellPadding="5">
+      <table className="cart-table">
         <thead>
           <tr>
             <th>Image</th><th>Name</th><th>Price</th>
@@ -39,16 +34,20 @@ export default function ViewCart() {
         <tbody>
           {items.map(it => (
             <tr key={it.productId}>
-              <td>
-                <img src={it.image} alt={it.name} width="80" />
-              </td>
+              <td><img src={it.image} alt={it.name} width="80" /></td>
               <td>{it.name}</td>
               <td>{it.price}</td>
               <td>{it.quantity}</td>
               <td>{it.price * it.quantity}</td>
               <td>
-                <button onClick={() => updateQuantity(it, it.quantity + 1)}>+</button>
-                <button onClick={() => updateQuantity(it, it.quantity - 1)}>-</button>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => updateQuantity(it, it.quantity + 1)}
+                >+</button>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => updateQuantity(it, it.quantity - 1)}
+                >−</button>
               </td>
             </tr>
           ))}

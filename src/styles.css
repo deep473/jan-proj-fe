@@ -1,0 +1,138 @@
+/* src/styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+:root {
+  --color-teal: #1AF2EA;
+  --color-blue: #4EACFC;
+  --color-red: #F84933;
+  --color-gold: #EAC46B;
+  --color-orange: #EF8817;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #fff;
+  color: #333;
+  text-align: center;
+}
+
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+h2, h3, h5 {
+  margin: 0.5rem 0;
+}
+
+h3.title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-blue);
+}
+
+h5.subtitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-teal);
+}
+
+p.description {
+  font-size: 1rem;
+  margin: 1rem 0 2rem;
+}
+
+.btn {
+  padding: 0.6rem 1.2rem;
+  margin: 0.5rem;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.btn-primary {
+  background: var(--color-blue);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: var(--color-orange);
+  color: #fff;
+}
+
+.btn-danger {
+  background: var(--color-red);
+  color: #fff;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form-group {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-group label {
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.product-table,
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.product-table th,
+.product-table td,
+.cart-table th,
+.cart-table td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+}
+
+.product-table th,
+.cart-table th {
+  background: var(--color-gold);
+  font-weight: 600;
+}
+
+.product-table img,
+.cart-table img {
+  border-radius: 4px;
+}
+
+input[type="number"] {
+  width: 3rem;
+  padding: 0.3rem;
+}

@@ -6,61 +6,47 @@ export default function Admin() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
-  // 1. Load all products on mount
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  useEffect(() => { fetchProducts(); }, []);
+  const fetchProducts = () =>
+    axios.get('http://localhost:8080/getAllProducts')
+         .then(res => setProducts(res.data))
+         .catch(console.error);
 
-  const fetchProducts = () => {
-    axios
-      .get('http://localhost:8080/getAllProducts')
-      .then(res => setProducts(res.data))
-      .catch(err => console.error('Failed to fetch products:', err));
-  };
+  const handleDelete = id =>
+    axios.get('http://localhost:8080/deleteProduct', { params: { id } })
+         .then(fetchProducts)
+         .catch(console.error);
 
-  // 2. Delete by ID, then refresh
-  const handleDelete = (id) => {
-    axios
-      .get('http://localhost:8080/deleteProduct', { params: { id } })
-      .then(() => fetchProducts())
-      .catch(err => console.error('Delete failed:', err));
-  };
-
-  // 3. Go to update page with product in state
-  const handleUpdate = (product) => {
+  const handleUpdate = product =>
     navigate('/update_prod_page', { state: { product } });
-  };
 
   return (
-    <div>
+    <div className="container">
       <h2>Admin Dashboard</h2>
-
-      <button onClick={() => navigate('/add_prod_page')}>
+      <button className="btn btn-primary" onClick={() => navigate('/add_prod_page')}>
         Add New Product
       </button>
 
-      <table border="1" >
+      <table className="product-table">
         <thead>
           <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Operations</th>
+            <th>Image</th><th>Name</th><th>Description</th><th>Price</th><th>Ops</th>
           </tr>
         </thead>
         <tbody>
           {products.map(p => (
             <tr key={p.id}>
-              <td>
-                <img src={p.image} alt={p.name} width="80" />
-              </td>
+              <td><img src={p.image} alt={p.name} width="80" /></td>
               <td>{p.name}</td>
               <td>{p.description}</td>
               <td>{p.price}</td>
               <td>
-                <button onClick={() => handleUpdate(p)}>Update</button>
-                <button onClick={() => handleDelete(p.id)}>Delete</button>
+                <button className="btn btn-secondary" onClick={() => handleUpdate(p)}>
+                  Update
+                </button>
+                <button className="btn btn-danger" onClick={() => handleDelete(p.id)}>
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
